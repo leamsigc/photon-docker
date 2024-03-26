@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  photon:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - PHOTON_VERSION=${PHOTON_VERSION}
+    container_name: photon_service
+    volumes:
+      - ./data:/photon
+    ports:
+      - ${PHOTON_PORT}:2322
