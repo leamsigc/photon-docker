@@ -1,4 +1,4 @@
-FROM openjdk:23-bullseye
+FROM openjdk:11
 
 # Install pbzip2 for parallel extraction
 RUN apt-get update \
@@ -12,12 +12,12 @@ ARG PHOTON_VERSION
 ENV PHOTON_VERSION ${PHOTON_VERSION:-0.5.0}
 # Show the version to dowmload in the container logs
 RUN echo $PHOTON_VERSION
+RUN mkdir -p /usr/photon
 # Download the Photon jar file
-WORKDIR /photon
+WORKDIR /usr/photon
 
-ADD https://github.com/komoot/photon/releases/download/$PHOTON_VERSION/photon-$PHOTON_VERSION.jar ./photon.jar
-COPY ./entrypoint.sh /usr/bin/
+RUN mkdir -p /usr/dowmload && wget -O /usr/dowmload/photon.jar https://github.com/komoot/photon/releases/download/$PHOTON_VERSION/photon-$PHOTON_VERSION.jar && ls
+COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 
-VOLUME /photon
 EXPOSE 2322
-CMD [ "entrypoint.sh" ]
+ENTRYPOINT /usr/bin/entrypoint.sh

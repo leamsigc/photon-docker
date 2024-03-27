@@ -9,6 +9,6 @@ services:
         - PHOTON_VERSION=${PHOTON_VERSION}
     container_name: photon_service
     volumes:
-      - ./data:/photon
+      - ./data:/usr/photon
     ports:
       - ${PHOTON_PORT}:2322
